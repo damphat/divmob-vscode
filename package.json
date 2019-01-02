@@ -1,0 +1,36 @@
+{
+    "name": "divmob",
+    "displayName": "Divmob Tools",
+    "description": "EPIC language for data and more",
+    "publisher": "damphat",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/damphat/divmob-vscode.git"
+    },
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.30.1"
+    },
+    "contributes": {
+        "languages": [
+            {
+                "id": "epic",
+                "aliases": [
+                    "EPIC"
+                ],
+                "extensions": [
+                    ".txt",
+                    ".epic"
+                ],
+                "configuration": "./epic-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "epic",
+                "scopeName": "source.epic",
+                "path": "./syntaxes/epic.json"
+            }
+        ]
+    }
+}

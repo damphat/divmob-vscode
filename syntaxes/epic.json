@@ -1,0 +1,327 @@
+{
+	"name": "EPIC (divmob language for data)",
+	"scopeName": "source.epic",
+	"patterns": [
+		{
+			"include": "#value"
+		}
+	],
+	"repository": {
+		"array": {
+			"begin": "\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.array.begin.epic"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.array.end.epic"
+				}
+			},
+			"name": "meta.structure.array.epic",
+			"patterns": [
+				{
+					"include": "#value"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.array.epic"
+				},
+				{
+					"match": "[^\\s\\]]",
+					"name": "invalid.illegal.expected-array-separator.epic"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"begin": "/\\*\\*(?!/)",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.epic"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.documentation.epic"
+				},
+				{
+					"begin": "/\\*",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.epic"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.epic"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.comment.epic"
+						}
+					},
+					"match": "(//).*$(?=\\n)",
+					"name": "comment.line.double-slash.js"
+				}
+			]
+		},
+		"constant": {
+			"match": "\\b(?:true|false|null)\\b",
+			"name": "constant.language.epic"
+		},
+		"number": {
+			"match": "(?x)        # turn on extended mode\n  -?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
+			"name": "constant.numeric.epic"
+		},
+		
+		"epicObject": {
+			"begin": "\\{",
+                "beginCaptures": {
+                    "0": {
+                        "name": "punctuation.definition.dictionary.begin.epic"
+                    }
+                },
+                "end": "\\}",
+                "endCaptures": {
+                    "0": {
+                        "name": "punctuation.definition.dictionary.end.epic"
+                    }
+                },
+                "name": "meta.structure.dictionary.epic",
+                "patterns": [
+                    {
+                        "include": "#comments"
+                    },
+                    {
+                        "comment": "the EPIC object key",
+                        "include": "#epicObjectKey"
+                    },
+                    {
+                        "include": "#comments"
+					},
+                    {
+                        "begin": ":",
+                        "beginCaptures": {
+                            "0": {
+                                "name": "punctuation.separator.dictionary.key-value.epic"
+                            }
+                        },
+                        "end": "(,)|(?=\\n)|(?=\\})",
+                        "endCaptures": {
+                            "1": {
+                                "name": "punctuation.separator.dictionary.pair.epic"
+                            }
+                        },
+                        "name": "meta.structure.dictionary.value.epic",
+                        "patterns": [
+                            {
+                                "comment": "the EPIC object value",
+                                "include": "#value"
+                            },
+                            {
+                                "match": "[^\\s,]",
+                                "name": "invalid.illegal.expected-dictionary-separator.epic"
+                            }
+                        ]
+                    },
+                    {
+                        "match": "[^\\s\\}]",
+                        "name": "invalid.illegal.expected-dictionary-separator.epic"
+                    }
+                ]
+		},
+
+		"epicPair": {
+			"patterns": [
+				{"include": "#epicObjectKey"},
+				{"include": "#number"}
+			]
+		},
+        "epicObject-": {
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.dictionary.begin.epic"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.dictionary.end.epic"
+				}
+			},
+			"name": "meta.structure.dictionary.epic",
+			"patterns": [
+				{
+					"include": "#epicObjectKey"
+				},
+				{
+					"begin": ":",
+                        "beginCaptures": {
+                            "0": {
+                                "name": "punctuation.separator.dictionary.key-value.epic"
+                            }
+                        },
+                        "end": "(,)|(?=\\n)|(?=\\})",
+                        "endCaptures": {
+                            "1": {
+                                "name": "punctuation.separator.dictionary.pair.epic"
+                            }
+                        },
+					"partterns": [
+						{
+							"include": "#value"
+						}
+					]
+				}
+			]
+		},
+		"object": {
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.dictionary.begin.epic"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.dictionary.end.epic"
+				}
+			},
+			"name": "meta.structure.dictionary.epic",
+			"patterns": [
+				{
+					"comment": "the EPIC object key",
+					"include": "#objectkey"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"begin": ":",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.separator.dictionary.key-value.epic"
+						}
+					},
+					"end": "(,)|(?=\\})",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.separator.dictionary.pair.epic"
+						}
+					},
+					"name": "meta.structure.dictionary.value.epic",
+					"patterns": [
+						{
+							"comment": "the EPIC object value",
+							"include": "#value"
+						},
+						{
+							"match": "[^\\s,]",
+							"name": "invalid.illegal.expected-dictionary-separator.epic"
+						}
+					]
+				},
+				{
+					"match": "[^\\s\\}]",
+					"name": "invalid.illegal.expected-dictionary-separator.epic"
+				}
+			]
+		},
+		"string": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.epic"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.epic"
+				}
+			},
+			"name": "string.quoted.double.epic",
+			"patterns": [
+				{
+					"include": "#stringcontent"
+				}
+			]
+        },
+        "epicString": {
+            "patterns": [{
+                "include" : "#string"
+            }, {
+                "name": "string.naked.epic",
+                "match": "[^ \\,\\{\\}\\[\\]\\n\\r\\t\\:]+"
+            }]
+		},
+        "epicObjectKey": {
+            "patterns": [
+                { "include": "#objectkey" },
+                {
+					"match": "[^ \\,\\{\\}\\[\\]\\n\\r\\t\\:]+",
+                    "name": "string.epic support.type.property-name.epic"        
+                }
+            ]
+        },
+		"objectkey": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.support.type.property-name.begin.epic"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.support.type.property-name.end.epic"
+				}
+			},
+			"name": "string.epic support.type.property-name.epic",
+			"patterns": [
+				{
+					"include": "#stringcontent"
+				}
+			]
+		},
+		"stringcontent": {
+			"patterns": [
+				{
+					"match": "(?x)                # turn on extended mode\n  \\\\                # a literal backslash\n  (?:               # ...followed by...\n    [\"\\\\/bfnrt]     # one of these characters\n    |               # ...or...\n    u               # a u\n    [0-9a-fA-F]{4}) # and four hex digits",
+					"name": "constant.character.escape.epic"
+				},
+				{
+					"match": "\\\\.",
+					"name": "invalid.illegal.unrecognized-string-escape.epic"
+				}
+			]
+		},
+		"value": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#constant"
+				},
+				{
+					"include": "#number"
+				},
+				{
+					"include": "#epicString"
+				},
+				{
+					"include": "#array"
+				},
+				{
+					"include": "#epicObject"
+				}
+			]
+		}
+	}
+}

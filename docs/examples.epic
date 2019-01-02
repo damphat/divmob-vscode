@@ -1,0 +1,21 @@
+{
+    // quote is optional for single word
+    id: phat
+
+    // inline object must have ","
+    name: { first: Phat, last: Dam}
+
+    age: 99.9,
+    icon: $(resource)/damphat.jpg
+    csv: /* dont eat */ [1, 2, 3, "đậu phộng"]
+    skills: {
+        languages: [
+            C++
+            Java
+        ]
+        scores: [
+            100
+            200
+        ]
+    }
+} 
